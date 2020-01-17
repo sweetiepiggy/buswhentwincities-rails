@@ -66,3 +66,4 @@ gem "sqlite3", "~> 1.4"
 
 gem 'loofah', '>= 2.3.1'
 gem 'nokogiri', '>= 1.10.4'
+gem 'newrelic_rpm'
