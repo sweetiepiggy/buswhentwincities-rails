@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
@@ -21,12 +21,5 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: postgresql
-  encoding: utf8
-  pool: 5
-  timeout: 5000
-  username: postgres
-  password: aaaaaaaaaaaaaaaa
+  <<: *default
   database: buswhen_database_production
-#  database: buswhentwincitiespostgresql
-  host: "/cloudsql/buswhentwincities:us-central1:buswhentwincitiespostgresql"
