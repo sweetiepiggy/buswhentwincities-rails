@@ -10,6 +10,6 @@ class StopsController < ApplicationController
   end
 
   def stop_params
-    params.permit(:zone_id, :stop_url)
+    params.permit(:stop_code, :zone_id, :stop_url)
   end
 end
