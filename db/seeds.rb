@@ -12,7 +12,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'stops.txt'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'UTF-8')
 csv.each do |row|
   Stop.create(id: row['stop_id'],
-              stop_code: row['stop_code'],
+              # stop_code: row['stop_code'],
               stop_name: row['stop_name'],
               stop_desc: row['stop_desc'],
               stop_lat:  row['stop_lat'],
