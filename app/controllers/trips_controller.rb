@@ -13,7 +13,8 @@ class TripsController < ApplicationController
 
     @trips = Trip.where(block_id: params[:block_id],
                         :service_id.in => (service_ids + added_service_ids - removed_service_ids).uniq,
-                        direction_id: params[:direction_id])
+                        direction_id: params[:direction_id],
+                        :trip_headsign => /#{Regexp.quote(params[:description])}$/)
 
     render json: @trips.to_json
   end
