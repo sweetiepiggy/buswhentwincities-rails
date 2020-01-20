@@ -14,68 +14,112 @@ gtfs_uri = "https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_metc/
 
 URI.open(gtfs_uri) do |uri_stream|
   Zip::File.open_buffer(uri_stream) do |zipfile|
-    # Zip::File.open(Rails.root.join('lib', 'seeds', 'csv_trans_transit_schedule_google_fd.zip')) do |zipfile|
+    # Zip::File.open(Rails.root.join('lib', 'seeds', 'csv_trans_transit_schedule_google_fd.zip')) do |zipf
+                                                                                                    ile|
     zipfile.each do |file|
       case file.name
       when 'calendar.txt'
-        CSV.parse(file.get_input_stream.read.force_encoding('UTF-8'), :headers => true, :encoding => 'UTF-8').each do |row|
-          Calendar.create(_id:        row['service_id'],
-                          monday:     row['monday'],
-                          tuesday:    row['tuesday'],
-                          wednesday:  row['wednesday'],
-                          thursday:   row['thursday'],
-                          friday:     row['friday'],
-                          saturday:   row['saturday'],
-                          sunday:     row['sunday'],
-                          start_date: row['start_date'],
-                          end_date:   row['end_date'])
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          Calendar.create(_id:        row[0],
+                          monday:     row[1],
+                          tuesday:    row[2],
+                          wednesday:  row[3],
+                          thursday:   row[4],
+                          friday:     row[5],
+                          saturday:   row[6],
+                          sunday:     row[7],
+                          start_date: row[8],
+                          end_date:   row[9])
         end
+        stream.close
       when 'calendar_dates.txt'
-        CSV.parse(file.get_input_stream.read.force_encoding('UTF-8'), :headers => true, :encoding => 'UTF-8').each do |row|
-          CalendarDate.create(service_id:     row['service_id'],
-                              date:           row['date'],
-                              exception_type: row['exception_type'])
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          CalendarDate.create(service_id:     row[0],
+                              date:           row[1],
+                              exception_type: row[2])
         end
+        stream.close
       when 'routes.txt'
-        CSV.parse(file.get_input_stream.read.force_encoding('UTF-8'), :headers => true, :encoding => 'UTF-8').each do |row|
-          Route.create(_id:              row['route_id'],
-                       agency_id:        row['agency_id'],
-                       route_short_name: row['route_short_name'],
-                       route_long_name:  row['route_long_name'],
-                       route_desc:       row['route_desc'],
-                       route_type:       row['route_type'],
-                       route_color:      row['route_color'],
-                       route_text_color: row['route_text_color'])
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          Route.create(_id:              row[0],
+                       agency_id:        row[1],
+                       route_short_name: row[2],
+                       route_long_name:  row[3],
+                       route_desc:       row[4],
+                       route_type:       row[5],
+                       # route_url:        row[6],
+                       route_color:      row[7],
+                       route_text_color: row[8])
         end
+        stream.close
       when 'shapes.txt'
-        CSV.parse(file.get_input_stream.read.force_encoding('UTF-8'), :headers => true, :encoding => 'UTF-8').each do |row|
-          Shape.create(shape_id:          row['shape_id'],
-                       shape_pt_lat:      row['shape_pt_lat'],
-                       shape_pt_lon:      row['shape_pt_lon'],
-                       shape_pt_sequence: row['shape_pt_sequence'])
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          Shape.create(shape_id:          row[0],
+                       shape_pt_lat:      row[1],
+                       shape_pt_lon:      row[2],
+                       shape_pt_sequence: row[3])
         end
+        stream.close
       when 'stops.txt'
-        CSV.parse(file.get_input_stream.read.force_encoding('UTF-8'), :headers => true, :encoding => 'UTF-8').each do |row|
-          Stop.create(_id:       row['stop_id'],
-                      id:        row['stop_id'],
-                      # stop_code: row['stop_code'],
-                      stop_name: row['stop_name'],
-                      stop_desc: row['stop_desc'],
-                      stop_lat:  row['stop_lat'],
-                      stop_lon:  row['stop_lon'],
-                      wheelchair_boarding: row['wheelchair_boarding'])
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          Stop.create(_id:       row[0],
+                      id:        row[0],
+                      # stop_code: row[1],
+                      stop_name: row[2],
+                      stop_desc: row[3],
+                      stop_lat:  row[4],
+                      stop_lon:  row[5],
+                      # stop_zone_id:        row[6],
+                      # stop_url:            row[7],
+                      # location_type:       row[8],
+                      wheelchair_boarding: row[9])
         end
-        when 'trips.txt'
-          CSV.parse(file.get_input_stream.read.force_encoding('UTF-8'), :headers => true, :encoding => 'UTF-8').each do |row|
-            Trip.create(_id:                   row['trip_id'],
-                        route_id:              row['route_id'],
-                        service_id:            row['service_id'],
-                        trip_headsign:         row['trip_headsign'],
-                        direction_id:          row['direction_id'],
-                        block_id:              row['block_id'],
-                        shape_id:              row['shape_id'],
-                        wheelchair_accessible: row['wheelchair_accessible'])
-          end
+        stream.close
+      when 'stop_times.txt'
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          StopTime.create(trip_id:        row[0],
+                          arrival_time:   row[1],
+                          departure_time: row[2],
+                          stop_id:        row[3],
+                          stop_sequence:  row[4],
+                          # pickup_type:    row[5],
+                          # drop_off_type:  row[6],
+                          timepoint:      row[7])
+        end
+        stream.close
+      when 'trips.txt'
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          Trip.create(_id:                   row[2],
+                      route_id:              row[0],
+                      service_id:            row[1],
+                      trip_headsign:         row[3],
+                      direction_id:          row[4],
+                      block_id:              row[5],
+                      shape_id:              row[6],
+                      wheelchair_accessible: row[7])
+        end
+        stream.close
       end
     end
   end

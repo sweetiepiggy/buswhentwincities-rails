@@ -5,9 +5,10 @@ Rails.application.routes.draw do
 #  resources :calendar
 #  resources :calendar_dates
   resources :routes
-  resources :shapes #, only: [:show]
+  resources :shapes, only: [:show]
   resources :stops
-  resources :trips #, only: [:show]
+  resources :stop_times, only: [:show]
+  resources :trips
 
   root 'welcome#index'
 end

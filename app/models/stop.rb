@@ -1,5 +1,6 @@
 class Stop
   include Mongoid::Document
+  field :id, type: Integer # for backwards compatibility
   # field :stop_code, type: Integer
   field :stop_name, type: String
   field :stop_desc, type: String

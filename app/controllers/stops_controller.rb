@@ -8,8 +8,4 @@ class StopsController < ApplicationController
     @stop = Stop.find(params[:id])
     render json: @stop.to_json
   end
-
-  def stop_params
-    params.permit(:stop_code, :zone_id, :stop_url)
-  end
 end
