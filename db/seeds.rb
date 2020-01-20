@@ -14,8 +14,7 @@ gtfs_uri = "https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_metc/
 
 URI.open(gtfs_uri) do |uri_stream|
   Zip::File.open_buffer(uri_stream) do |zipfile|
-    # Zip::File.open(Rails.root.join('lib', 'seeds', 'csv_trans_transit_schedule_google_fd.zip')) do |zipf
-                                                                                                    ile|
+    # Zip::File.open(Rails.root.join('lib', 'seeds', 'csv_trans_transit_schedule_google_fd.zip')) do |zipfile|
     zipfile.each do |file|
       case file.name
       when 'calendar.txt'
