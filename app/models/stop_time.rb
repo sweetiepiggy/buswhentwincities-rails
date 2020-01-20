@@ -1,8 +1,8 @@
 class StopTime
   include Mongoid::Document
-  field :trip_id, type: String
-  field :arrival_time, type: String
-  field :departure_time, type: String
+  field :trip_id, type: Integer
+  field :arrival_time, type: DateTime
+  field :departure_time, type: DateTime
   field :stop_id, type: Integer
   field :stop_sequence, type: Integer
   # field :pickup_type, type: Integer

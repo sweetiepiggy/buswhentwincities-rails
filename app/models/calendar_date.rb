@@ -1,6 +1,6 @@
 class CalendarDate
   include Mongoid::Document
-  field :service_id, type: String
+  field :service_id, type: Integer
   field :date, type: Date
   field :exception_type, type: Integer
 
