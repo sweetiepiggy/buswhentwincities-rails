@@ -57,6 +57,7 @@ URI.open(gtfs_uri) do |uri_stream|
       when 'stops.txt'
         CSV.parse(file.get_input_stream.read.force_encoding('UTF-8'), :headers => true, :encoding => 'UTF-8').each do |row|
           Stop.create(_id:       row['stop_id'],
+                      id:        row['stop_id'],
                       # stop_code: row['stop_code'],
                       stop_name: row['stop_name'],
                       stop_desc: row['stop_desc'],
