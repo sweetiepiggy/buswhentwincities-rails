@@ -11,7 +11,8 @@ class TripsController < ApplicationController
       cd[:exception_type] == 1
     }
     added_service_ids = exception_service_ids[0].map(&:service_id)
-    removed_service_ids = exception_service_ids[1].map(&:service_id)
+    # removed_service_ids = exception_service_ids[1].map(&:service_id)
+    removed_service_ids = []
 
     @trips = Trip.where(block_id: params[:block_id],
                         :service_id.in => (service_ids + added_service_ids - removed_service_ids).uniq,
