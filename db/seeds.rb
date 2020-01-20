@@ -74,31 +74,31 @@ URI.open(gtfs_uri) do |uri_stream|
                               exception_type: row[2])
         end
         stream.close
-      # when 'routes.txt'
-      #   Route.delete_all
-      #   stream = file.get_input_stream
-      #   stream.readline
-      #   stream.each do |line|
-      #     row = CSV.parse_line(line.force_encoding('UTF-8'))
-      #     route_id_str = row[0]
-      #     if route_ids.key?(route_id_str)
-      #       route_id = route_ids[route_id_str]
-      #     else
-      #       route_id = route_id_cnt
-      #       route_id_cnt += 1
-      #       route_ids[route_id_str] = route_id
-      #     end
-      #     Route.create(_id:              route_id,
-      #                  agency_id:        row[1],
-      #                  route_short_name: row[2],
-      #                  route_long_name:  row[3],
-      #                  route_desc:       row[4],
-      #                  route_type:       row[5],
-      #                  # route_url:        row[6],
-      #                  route_color:      row[7],
-      #                  route_text_color: row[8])
-      #   end
-      #   stream.close
+      when 'routes.txt'
+        Route.delete_all
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          route_id_str = row[0]
+          if route_ids.key?(route_id_str)
+            route_id = route_ids[route_id_str]
+          else
+            route_id = route_id_cnt
+            route_id_cnt += 1
+            route_ids[route_id_str] = route_id
+          end
+          Route.create(_id:              route_id,
+                       agency_id:        row[1],
+                       route_short_name: row[2],
+                       route_long_name:  row[3],
+                       route_desc:       row[4],
+                       route_type:       row[5],
+                       # route_url:        row[6],
+                       route_color:      row[7],
+                       route_text_color: row[8])
+        end
+        stream.close
       # when 'shapes.txt'
       #   Shape.delete_all
       #   stream = file.get_input_stream
@@ -131,72 +131,72 @@ URI.open(gtfs_uri) do |uri_stream|
       #                )
       #   end
       #   stream.close
-      # when 'stop_times.txt'
-      #   StopTime.delete_all
-      #   stream = file.get_input_stream
-      #   stream.readline
-      #   stream.each do |line|
-      #     row = CSV.parse_line(line.force_encoding('UTF-8'))
-      #     trip_id_str = row[0]
-      #     if trip_ids.key?(trip_id_str)
-      #       trip_id = trip_ids[trip_id_str]
-      #     else
-      #       trip_id = trip_id_cnt
-      #       trip_id_cnt += 1
-      #       trip_ids[trip_id_str] = trip_id
-      #     end
-      #     timezone_offset = Time.find_zone("America/Chicago").formatted_offset
-      #     StopTime.create(trip_id:        trip_id,
-      #                     arrival_time:   "2020-01-01T#{row[1]}#{timezone_offset}",
-      #                     departure_time: "2020-01-01T#{row[2]}#{timezone_offset}",
-      #                     stop_id:        row[3],
-      #                     stop_sequence:  row[4],
-      #                     # pickup_type:    row[5],
-      #                     # drop_off_type:  row[6],
-      #                     timepoint:      row[7])
-      #   end
-      #   stream.close
-      # when 'trips.txt'
-      #   Trip.delete_all
-      #   stream = file.get_input_stream
-      #   stream.readline
-      #   stream.each do |line|
-      #     row = CSV.parse_line(line.force_encoding('UTF-8'))
-      #     route_id_str = row[0]
-      #     if route_ids.key?(route_id_str)
-      #       route_id = route_ids[route_id_str]
-      #     else
-      #       route_id = route_id_cnt
-      #       route_id_cnt += 1
-      #       route_ids[route_id_str] = route_id
-      #     end
-      #     service_id_str = row[1]
-      #     if service_ids.key?(service_id_str)
-      #       service_id = service_ids[service_id_str]
-      #     else
-      #       service_id = service_id_cnt
-      #       service_id_cnt += 1
-      #       service_ids[service_id_str] = service_id
-      #     end
-      #     trip_id_str = row[2]
-      #     if trip_ids.key?(trip_id_str)
-      #       trip_id = trip_ids[trip_id_str]
-      #     else
-      #       trip_id = trip_id_cnt
-      #       trip_id_cnt += 1
-      #       trip_ids[trip_id_str] = trip_id
-      #     end
-      #     Trip.create(_id:                   trip_id,
-      #                 route_id:              route_id,
-      #                 service_id:            service_id,
-      #                 trip_headsign:         row[3],
-      #                 direction_id:          row[4],
-      #                 block_id:              row[5],
-      #                 shape_id:              row[6]
-      #                 # wheelchair_accessible: row[7]
-      #                )
-      #   end
-      #   stream.close
+      when 'stop_times.txt'
+        StopTime.delete_all
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          trip_id_str = row[0]
+          if trip_ids.key?(trip_id_str)
+            trip_id = trip_ids[trip_id_str]
+          else
+            trip_id = trip_id_cnt
+            trip_id_cnt += 1
+            trip_ids[trip_id_str] = trip_id
+          end
+          timezone_offset = Time.find_zone("America/Chicago").formatted_offset
+          StopTime.create(trip_id:        trip_id,
+                          arrival_time:   "2020-01-01T#{row[1]}#{timezone_offset}",
+                          departure_time: "2020-01-01T#{row[2]}#{timezone_offset}",
+                          stop_id:        row[3],
+                          stop_sequence:  row[4],
+                          # pickup_type:    row[5],
+                          # drop_off_type:  row[6],
+                          timepoint:      row[7])
+        end
+        stream.close
+      when 'trips.txt'
+        Trip.delete_all
+        stream = file.get_input_stream
+        stream.readline
+        stream.each do |line|
+          row = CSV.parse_line(line.force_encoding('UTF-8'))
+          route_id_str = row[0]
+          if route_ids.key?(route_id_str)
+            route_id = route_ids[route_id_str]
+          else
+            route_id = route_id_cnt
+            route_id_cnt += 1
+            route_ids[route_id_str] = route_id
+          end
+          service_id_str = row[1]
+          if service_ids.key?(service_id_str)
+            service_id = service_ids[service_id_str]
+          else
+            service_id = service_id_cnt
+            service_id_cnt += 1
+            service_ids[service_id_str] = service_id
+          end
+          trip_id_str = row[2]
+          if trip_ids.key?(trip_id_str)
+            trip_id = trip_ids[trip_id_str]
+          else
+            trip_id = trip_id_cnt
+            trip_id_cnt += 1
+            trip_ids[trip_id_str] = trip_id
+          end
+          Trip.create(_id:                   trip_id,
+                      route_id:              route_id,
+                      service_id:            service_id,
+                      trip_headsign:         row[3],
+                      direction_id:          row[4],
+                      block_id:              row[5],
+                      shape_id:              row[6]
+                      # wheelchair_accessible: row[7]
+                     )
+        end
+        stream.close
       end
     end
   end
