@@ -1,7 +1,7 @@
 class Trip
   include Mongoid::Document
-  field :route_id, type: Integer
-  field :service_id, type: Integer
+  field :route_id, type: String
+  field :service_id, type: String
   field :trip_headsign, type: String
   field :direction_id, type: Integer
   field :block_id, type: Integer
