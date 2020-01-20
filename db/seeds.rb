@@ -28,6 +28,7 @@ URI.open(gtfs_uri) do |uri_stream|
     zipfile.each do |file|
       case file.name
       when 'calendar.txt'
+        Calendar.delete_all
         stream = file.get_input_stream
         stream.readline
         stream.each do |line|
@@ -54,6 +55,7 @@ URI.open(gtfs_uri) do |uri_stream|
         end
         stream.close
       when 'calendar_dates.txt'
+        CalendarDate.delete_all
         stream = file.get_input_stream
         stream.readline
         stream.each do |line|
@@ -73,6 +75,7 @@ URI.open(gtfs_uri) do |uri_stream|
         end
         stream.close
       # when 'routes.txt'
+      #   Route.delete_all
       #   stream = file.get_input_stream
       #   stream.readline
       #   stream.each do |line|
@@ -97,6 +100,7 @@ URI.open(gtfs_uri) do |uri_stream|
       #   end
       #   stream.close
       # when 'shapes.txt'
+      #   Shape.delete_all
       #   stream = file.get_input_stream
       #   stream.readline
       #   stream.each do |line|
@@ -108,6 +112,7 @@ URI.open(gtfs_uri) do |uri_stream|
       #   end
       #   stream.close
       # when 'stops.txt'
+      #   Stop.delete_all
       #   stream = file.get_input_stream
       #   stream.readline
       #   stream.each do |line|
@@ -127,6 +132,7 @@ URI.open(gtfs_uri) do |uri_stream|
       #   end
       #   stream.close
       # when 'stop_times.txt'
+      #   StopTime.delete_all
       #   stream = file.get_input_stream
       #   stream.readline
       #   stream.each do |line|
@@ -151,6 +157,7 @@ URI.open(gtfs_uri) do |uri_stream|
       #   end
       #   stream.close
       # when 'trips.txt'
+      #   Trip.delete_all
       #   stream = file.get_input_stream
       #   stream.readline
       #   stream.each do |line|
