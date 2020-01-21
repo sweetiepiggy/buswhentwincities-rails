@@ -11,7 +11,7 @@ class TripsController < ApplicationController
 
     if @trips.count > 1 then
       # since we currently only use the shape_id, just return any trip if all shape_ids are same
-      if @trips.distinct(:shape_id) == 1 then
+      if @trips.distinct(:shape_id).count == 1 then
         @trips = @trips.limit(1)
       # try also checking service id (this should always be checked,
       # but doing so seems too strict and fails to find many trips)
@@ -34,7 +34,7 @@ class TripsController < ApplicationController
 
         # TODO: refactor this so it's not repeated from above
         if @trips.count > 1 then
-          if @trips.distinct(:shape_id) == 1 then
+          if @trips.distinct(:shape_id).count == 1 then
             @trips = @trips.limit(1)
           # still have too many candidates, so try to narrow down by time/place
           elsif params.key?(:stop_id) then
@@ -46,7 +46,10 @@ class TripsController < ApplicationController
                                         :departure_time.gte => earliest_departure_time,
                                         :departure_time.lte => latest_departure_time)
             trip_ids = stop_times.map(&:trip_id)
-            @trips = Trip.where(:_id.in => trip_ids)
+            maybe_trips = Trip.where(:_id.in => trip_ids)
+            if maybe_trips.count > 1 then
+              @trips = maybe_trips
+            end
           end
         end
       end
