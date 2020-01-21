@@ -28,7 +28,7 @@ class TripsController < ApplicationController
         }
         added_service_ids = exception_service_ids[0].map(&:service_id)
         removed_service_ids = exception_service_ids[1].map(&:service_id)
-        service_ids = service_ids + added_service_ids - removed_service_ids
+        service_ids = normal_service_ids + added_service_ids - removed_service_ids
 
         @trips = @trips.where(:service_id.in => service_ids)
 
