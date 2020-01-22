@@ -6,8 +6,12 @@ class TripsController < ApplicationController
     #                     :trip_headsign => /#{Regexp.quote(params[:description])}$/)
 
     @trips = Trip.where(block_id: params[:block_id],
-                        direction_id: params[:direction_id],
-                        :trip_headsign => /#{Regexp.quote(params[:description])}$/)
+                        direction_id: params[:direction_id])
+
+    description = params[:description]
+    if not description.include?("DELAYED") then
+      @trips = @trips.where(:trip_headsign => /#{Regexp.quote(params[:description])}$/)
+    end
 
     if @trips.count > 1 then
       # since we currently only use the shape_id, just return any trip if all shape_ids are same
