@@ -131,54 +131,13 @@ URI.open(gtfs_uri) do |uri_stream|
       #               )
       #  end
       #  stream.close
-      #when 'stop_times.txt'
-      #  StopTime.delete_all
-      #  stream = file.get_input_stream
-      #  stream.readline
-      #  stream.each do |line|
-      #    row = CSV.parse_line(line.force_encoding('UTF-8'))
-      #    # trip_id_str = row[0]
-      #    # if trip_ids.key?(trip_id_str)
-      #    #   trip_id = trip_ids[trip_id_str]
-      #    # else
-      #    #   trip_id = trip_id_cnt
-      #    #   trip_id_cnt += 1
-      #    #   trip_ids[trip_id_str] = trip_id
-      #    # end
-      #    timezone_offset = Time.find_zone("America/Chicago").formatted_offset
-      #    StopTime.create(trip_id:        row[0],
-      #                    arrival_time:   "2020-01-01T#{row[1]}#{timezone_offset}",
-      #                    departure_time: "2020-01-01T#{row[2]}#{timezone_offset}",
-      #                    stop_id:        row[3],
-      #                    stop_sequence:  row[4],
-      #                    # pickup_type:    row[5],
-      #                    # drop_off_type:  row[6],
-      #                    timepoint:      row[7])
-      #  end
-      #  stream.close
-      when 'trips.txt'
-        Trip.delete_all
+      when 'stop_times.txt'
+        StopTime.delete_all
         stream = file.get_input_stream
         stream.readline
         stream.each do |line|
           row = CSV.parse_line(line.force_encoding('UTF-8'))
-          # route_id_str = row[0]
-          # if route_ids.key?(route_id_str)
-          #   route_id = route_ids[route_id_str]
-          # else
-          #   route_id = route_id_cnt
-          #   route_id_cnt += 1
-          #   route_ids[route_id_str] = route_id
-          # end
-          # service_id_str = row[1]
-          # if service_ids.key?(service_id_str)
-          #   service_id = service_ids[service_id_str]
-          # else
-          #   service_id = service_id_cnt
-          #   service_id_cnt += 1
-          #   service_ids[service_id_str] = service_id
-          # end
-          # trip_id_str = row[2]
+          # trip_id_str = row[0]
           # if trip_ids.key?(trip_id_str)
           #   trip_id = trip_ids[trip_id_str]
           # else
@@ -186,19 +145,60 @@ URI.open(gtfs_uri) do |uri_stream|
           #   trip_id_cnt += 1
           #   trip_ids[trip_id_str] = trip_id
           # end
-          Trip.create(_id:                   row[2],
-                      route_id:              row[0],
-                      service_id:            row[1],
-                      trip_headsign:         row[3],
-                      direction_id:          row[4],
-                      #direction:             row[5],
-                      block_id:              row[6],
-                      shape_id:              row[7]
-                      # wheelchair_accessible: row[8]
-                      #branch_letter:         row[9]
-                     )
+          timezone_offset = Time.find_zone("America/Chicago").formatted_offset
+          StopTime.create(trip_id:        row[0],
+                          arrival_time:   "2020-01-01T#{row[1]}#{timezone_offset}",
+                          departure_time: "2020-01-01T#{row[2]}#{timezone_offset}",
+                          stop_id:        row[3],
+                          stop_sequence:  row[4],
+                          # pickup_type:    row[5],
+                          # drop_off_type:  row[6],
+                          timepoint:      row[7])
         end
         stream.close
+      #when 'trips.txt'
+      #  Trip.delete_all
+      #  stream = file.get_input_stream
+      #  stream.readline
+      #  stream.each do |line|
+      #    row = CSV.parse_line(line.force_encoding('UTF-8'))
+      #    # route_id_str = row[0]
+      #    # if route_ids.key?(route_id_str)
+      #    #   route_id = route_ids[route_id_str]
+      #    # else
+      #    #   route_id = route_id_cnt
+      #    #   route_id_cnt += 1
+      #    #   route_ids[route_id_str] = route_id
+      #    # end
+      #    # service_id_str = row[1]
+      #    # if service_ids.key?(service_id_str)
+      #    #   service_id = service_ids[service_id_str]
+      #    # else
+      #    #   service_id = service_id_cnt
+      #    #   service_id_cnt += 1
+      #    #   service_ids[service_id_str] = service_id
+      #    # end
+      #    # trip_id_str = row[2]
+      #    # if trip_ids.key?(trip_id_str)
+      #    #   trip_id = trip_ids[trip_id_str]
+      #    # else
+      #    #   trip_id = trip_id_cnt
+      #    #   trip_id_cnt += 1
+      #    #   trip_ids[trip_id_str] = trip_id
+      #    # end
+      #    Trip.create(_id:                   row[2],
+      #                route_id:              row[0],
+      #                service_id:            row[1],
+      #                trip_headsign:         row[3],
+      #                direction_id:          row[4],
+      #                #direction:             row[5],
+      #                block_id:              row[6],
+      #                shape_id:              row[7]
+      #                # wheelchair_accessible: row[8]
+      #                #branch_letter:         row[9]
+      #               )
+      #  end
+      #  stream.close
       end
     end
   end
