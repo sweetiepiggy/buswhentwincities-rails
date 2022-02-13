@@ -191,11 +191,11 @@ URI.open(gtfs_uri) do |uri_stream|
                       service_id:            row[1],
                       trip_headsign:         row[3],
                       direction_id:          row[4],
-                      direction:             row[5],
+                      #direction:             row[5],
                       block_id:              row[6],
-                      shape_id:              row[7],
+                      shape_id:              row[7]
                       # wheelchair_accessible: row[8]
-                      branch_letter:         row[9]
+                      #branch_letter:         row[9]
                      )
         end
         stream.close
