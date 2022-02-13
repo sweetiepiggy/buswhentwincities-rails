@@ -147,8 +147,8 @@ URI.open(gtfs_uri) do |uri_stream|
           # end
           timezone_offset = Time.find_zone("America/Chicago").formatted_offset
           StopTime.create(trip_id:        row[0],
-                          arrival_time:   "2020-01-01T#{row[1]}#{timezone_offset}",
-                          departure_time: "2020-01-01T#{row[2]}#{timezone_offset}",
+                          arrival_time:   "2022-01-01T#{row[1]}#{timezone_offset}",
+                          departure_time: "2022-01-01T#{row[2]}#{timezone_offset}",
                           stop_id:        row[3],
                           stop_sequence:  row[4],
                           # pickup_type:    row[5],
