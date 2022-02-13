@@ -111,26 +111,26 @@ URI.open(gtfs_uri) do |uri_stream|
                        shape_pt_sequence: row[3])
         end
         stream.close
-      when 'stops.txt'
-        Stop.delete_all
-        stream = file.get_input_stream
-        stream.readline
-        stream.each do |line|
-          row = CSV.parse_line(line.force_encoding('UTF-8'))
-          Stop.create(_id:       row[0],
-                      id:        row[0],
-                      # stop_code: row[1],
-                      stop_name: row[2],
-                      # stop_desc: row[3],
-                      stop_lat:  row[4],
-                      stop_lon:  row[5]
-                      # stop_zone_id:        row[6],
-                      # stop_url:            row[7],
-                      # location_type:       row[8],
-                      # wheelchair_boarding: row[9]
-                     )
-        end
-        stream.close
+      #when 'stops.txt'
+      #  Stop.delete_all
+      #  stream = file.get_input_stream
+      #  stream.readline
+      #  stream.each do |line|
+      #    row = CSV.parse_line(line.force_encoding('UTF-8'))
+      #    Stop.create(_id:       row[0],
+      #                id:        row[0],
+      #                # stop_code: row[1],
+      #                stop_name: row[2],
+      #                # stop_desc: row[3],
+      #                stop_lat:  row[4],
+      #                stop_lon:  row[5]
+      #                # stop_url:            row[6],
+      #                # location_type:       row[7],
+      #                # wheelchair_boarding: row[8]
+      #                # platform_code        row[9],
+      #               )
+      #  end
+      #  stream.close
       #when 'stop_times.txt'
       #  StopTime.delete_all
       #  stream = file.get_input_stream
@@ -191,9 +191,11 @@ URI.open(gtfs_uri) do |uri_stream|
       #                 service_id:            row[1],
       #                 trip_headsign:         row[3],
       #                 direction_id:          row[4],
-      #                 block_id:              row[5],
-      #                 shape_id:              row[6]
-      #                 # wheelchair_accessible: row[7]
+      #                 direction:             row[5],
+      #                 block_id:              row[6],
+      #                 shape_id:              row[7]
+      #                 # wheelchair_accessible: row[8]
+      #                 branch_letter:         row[9]
       #                )
       #   end
       #   stream.close
