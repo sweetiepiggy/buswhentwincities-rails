@@ -5,7 +5,7 @@ class StopTimesController < ApplicationController
   end
 
   def show
-    @stop_times = StopTimes.where(trip_id: params[:id])
+    @stop_times = StopTime.where(trip_id: params[:id])
     render json: @stop_times.to_json(:except => :_id)
   end
 end
