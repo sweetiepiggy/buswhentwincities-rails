@@ -111,51 +111,51 @@ URI.open(gtfs_uri) do |uri_stream|
       #                 shape_pt_sequence: row[3])
       #  end
       #  stream.close
-      #when 'stops.txt'
-      #  Stop.delete_all
-      #  stream = file.get_input_stream
-      #  stream.readline
-      #  stream.each do |line|
-      #    row = CSV.parse_line(line.force_encoding('UTF-8'))
-      #    Stop.create(_id:       row[0],
-      #                id:        row[0],
-      #                # stop_code: row[1],
-      #                stop_name: row[2],
-      #                # stop_desc: row[3],
-      #                stop_lat:  row[4],
-      #                stop_lon:  row[5]
-      #                # stop_url:            row[6],
-      #                # location_type:       row[7],
-      #                # wheelchair_boarding: row[8]
-      #                # platform_code        row[9],
-      #               )
-      #  end
-      #  stream.close
-      when 'stop_times.txt'
-        StopTime.delete_all
+      when 'stops.txt'
+        Stop.delete_all
         stream = file.get_input_stream
         stream.readline
         stream.each do |line|
           row = CSV.parse_line(line.force_encoding('UTF-8'))
-          # trip_id_str = row[0]
-          # if trip_ids.key?(trip_id_str)
-          #   trip_id = trip_ids[trip_id_str]
-          # else
-          #   trip_id = trip_id_cnt
-          #   trip_id_cnt += 1
-          #   trip_ids[trip_id_str] = trip_id
-          # end
-          timezone_offset = Time.find_zone("America/Chicago").formatted_offset
-          StopTime.create(trip_id:        row[0],
-                          arrival_time:   "2022-01-01T#{row[1]}#{timezone_offset}",
-                          departure_time: "2022-01-01T#{row[2]}#{timezone_offset}",
-                          stop_id:        row[3],
-                          stop_sequence:  row[4],
-                          # pickup_type:    row[5],
-                          # drop_off_type:  row[6],
-                          timepoint:      row[7])
+          Stop.create(_id:       row[0],
+                      id:        row[0],
+                      # stop_code: row[1],
+                      stop_name: row[2],
+                      # stop_desc: row[3],
+                      stop_lat:  row[4],
+                      stop_lon:  row[5]
+                      # stop_url:            row[6],
+                      # location_type:       row[7],
+                      # wheelchair_boarding: row[8]
+                      # platform_code        row[9],
+                     )
         end
-        stream.close
+      #  stream.close
+      #when 'stop_times.txt'
+      #  StopTime.delete_all
+      #  stream = file.get_input_stream
+      #  stream.readline
+      #  stream.each do |line|
+      #    row = CSV.parse_line(line.force_encoding('UTF-8'))
+      #    # trip_id_str = row[0]
+      #    # if trip_ids.key?(trip_id_str)
+      #    #   trip_id = trip_ids[trip_id_str]
+      #    # else
+      #    #   trip_id = trip_id_cnt
+      #    #   trip_id_cnt += 1
+      #    #   trip_ids[trip_id_str] = trip_id
+      #    # end
+      #    timezone_offset = Time.find_zone("America/Chicago").formatted_offset
+      #    StopTime.create(trip_id:        row[0],
+      #                    arrival_time:   "2022-01-01T#{row[1]}#{timezone_offset}",
+      #                    departure_time: "2022-01-01T#{row[2]}#{timezone_offset}",
+      #                    stop_id:        row[3],
+      #                    stop_sequence:  row[4],
+      #                    # pickup_type:    row[5],
+      #                    # drop_off_type:  row[6],
+      #                    timepoint:      row[7])
+      #  end
+      #  stream.close
       #when 'trips.txt'
       #  Trip.delete_all
       #  stream = file.get_input_stream
