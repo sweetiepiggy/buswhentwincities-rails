@@ -1,5 +1,6 @@
 class StopTime
   include Mongoid::Document
+  has_one :stop
   field :trip_id, type: String
   field :arrival_time, type: DateTime
   field :departure_time, type: DateTime
