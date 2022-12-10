@@ -233,7 +233,7 @@ DEPENDENCIES
   puma (>= 3.12.2)
   rack (>= 2.0.8)
   rails (~> 5.2.8)
-  rubyzip (>= 1.0.0)
+  rubyzip (~> 2.3.0)
   sass-rails (~> 5.0)
   selenium-webdriver
   spring

@@ -68,4 +68,4 @@ gem 'newrelic_rpm'
 gem 'mongoid', '~> 7.0.5'
 gem 'mongo'
 gem 'bson_ext'
-gem 'rubyzip', ">= 1.0.0"
+gem 'rubyzip', "~> 2.3.0"
