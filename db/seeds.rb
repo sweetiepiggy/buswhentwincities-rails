@@ -160,7 +160,7 @@ URI.open(gtfs_uri) do |uri_stream|
             }
           end
           if stop_times.length >= 1000
-            StopTime.insert_all(stop_times)
+            StopTime.create(stop_times)
             stop_times = []
           end
         end
