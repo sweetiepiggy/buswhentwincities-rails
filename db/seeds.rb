@@ -133,6 +133,7 @@ URI.open(gtfs_uri) do |uri_stream|
       #  stream.close
       when 'stop_times.txt'
         StopTime.delete_all
+        stop_times = []
         stream = file.get_input_stream
         stream.readline
         timezone_offset = Time.find_zone("America/Chicago").formatted_offset
@@ -146,16 +147,28 @@ URI.open(gtfs_uri) do |uri_stream|
           #   trip_id_cnt += 1
           #   trip_ids[trip_id_str] = trip_id
           # end
-          StopTime.create(trip_id:        row[0],
-                          arrival_time:   "2022-01-01T#{row[1]}#{timezone_offset}",
-                          departure_time: "2022-01-01T#{row[2]}#{timezone_offset}",
-                          stop_id:        row[3],
-                          stop_sequence:  row[4],
-                          # pickup_type:    row[5],
-                          # drop_off_type:  row[6],
-                          timepoint:      row[7])
+          if not row[0].include?('JUN')
+            stop_times << {
+              trip_id: row[0],
+              arrival_time:   "2022-01-01T#{row[1]}#{timezone_offset}",
+              departure_time: "2022-01-01T#{row[2]}#{timezone_offset}",
+              stop_id:        row[3],
+              stop_sequence:  row[4],
+              # pickup_type:    row[5],
+              # drop_off_type:  row[6],
+              timepoint:      row[7]
+            }
+          end
+          if stop_times.length >= 1000
+            StopTime.insert_all(stop_times)
+            stop_times = []
+          end
         end
         stream.close
+        if not stop_times.empty?
+          StopTime.insert_all(stop_times)
+          stop_times = []
+        end
       #when 'trips.txt'
       #  Trip.delete_all
       #  stream = file.get_input_stream
