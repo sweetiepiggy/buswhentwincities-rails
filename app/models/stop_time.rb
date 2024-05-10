@@ -15,6 +15,7 @@ class StopTime
   index({ trip_id: 1, stop_id: 1})
 
   def self.import(uri)
+    timezone_offset = Time.find_zone("America/Chicago").formatted_offset
     URI.open(uri).each do |line|
       row = CSV.parse_line(line.force_encoding('UTF-8'))
       StopTime.create(trip_id:        row[0],
